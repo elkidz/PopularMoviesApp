@@ -1,14 +1,17 @@
 package com.example.popularmovies;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.popularmovies.utils.MovieUtils;
 import com.example.popularmovies.utils.NetworkUtils;
@@ -40,13 +43,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mMovieAdapter = new MovieAdapter(this);
         mRecyclerView.setAdapter(mMovieAdapter);
 
-        loadMovieData();
+        loadMovieData(NetworkUtils.Sort.POPULAR.name());
     }
 
-    private void loadMovieData() {
+    private void loadMovieData(String sortName) {
         showMovieDataView();
 
-        new FetchMovieTask().execute();
+        new FetchMovieTask().execute(sortName);
     }
 
     private void showMovieDataView() {
@@ -84,13 +87,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         @Override
         protected String[] doInBackground(String... params) {
 
-            URL weatherRequestUrl = NetworkUtils.buildUrl();
+            if (params.length == 0) {
+                return null;
+            }
+
+            String sortName = params[0];
+            URL weatherRequestUrl = NetworkUtils.buildUrl(NetworkUtils.Sort.valueOf(sortName));
 
             try {
                 String jsonResponse = NetworkUtils
                         .getResponseFromHttpUrl(weatherRequestUrl);
 
                 String[] simpleData = MovieUtils.getListFromJson(jsonResponse);
+
                 return simpleData;
 
             } catch (Exception e) {
@@ -111,4 +120,33 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             }
         }
     }
+
+
+    /**
+     * Menu
+     */
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.sort, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_sort_by_popular:
+                loadMovieData(NetworkUtils.Sort.POPULAR.name());
+                return true;
+            case R.id.action_sort_by_top_rated:
+                loadMovieData(NetworkUtils.Sort.TOP_RATED.name());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 }

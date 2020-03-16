@@ -21,7 +21,8 @@ public final class MovieUtils {
      * @return Array of Strings describing weather data
      * @throws JSONException If JSON data cannot be properly parsed
      */
-    public static String[] getListFromJson(String movieJsonStr) throws JSONException {
+    public static String[] getListFromJson(String movieJsonStr)
+            throws JSONException {
 
         final String RESULT_LIST = "results";
         final String MOVIE_ID = "id";
@@ -63,6 +64,7 @@ public final class MovieUtils {
             poster = movie.getString(MOVIE_POSTER);
 
             parsedData[i] = id + " - " + title + " - " + rating + " - " + poster;
+            parsedData[i] = NetworkUtils.buildImageUrl(poster.replace("/", "")).toString();
         }
 
         return parsedData;
