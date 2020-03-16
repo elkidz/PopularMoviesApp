@@ -4,18 +4,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Utility functions to handle OpenWeatherMap JSON data.
- */
 public final class MovieUtils {
 
     /**
      * This method parses JSON from a web response and returns an array of Strings
-     * describing the weather over various days from the forecast.
-     * <p/>
-     * Later on, we'll be parsing the JSON into structured data within the
-     * getFullWeatherDataFromJson function, leveraging the data we have stored in the JSON. For
-     * now, we just convert the JSON into human-readable strings.
+     * describing the details about a specific movie.
      *
      * @param movieJsonStr JSON response from server
      * @return Array of Strings describing weather data

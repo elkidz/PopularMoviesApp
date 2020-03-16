@@ -30,6 +30,11 @@ public final class NetworkUtils {
     private static final String POPULAR_PATH = "popular";
     private static final String TOP_RATED_PATH = "top_rated";
 
+    public enum Sort {
+        POPULAR,
+        TOP_RATED
+    }
+
     /**
      * Builds the URL used to return the list of movies
      *
@@ -86,11 +91,6 @@ public final class NetworkUtils {
         Log.v(TAG, "Built URI " + url);
 
         return url;
-    }
-
-    public enum Sort {
-        POPULAR,
-        TOP_RATED
     }
 
     /**
