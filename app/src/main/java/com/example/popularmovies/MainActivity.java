@@ -1,5 +1,7 @@
 package com.example.popularmovies;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.popularmovies.utils.MovieUtils;
+import com.example.popularmovies.utils.MovieJsonUtils;
 import com.example.popularmovies.utils.NetworkUtils;
 
 import java.net.URL;
@@ -38,10 +40,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
 
-        mRecyclerView.setHasFixedSize(true);
-
         mMovieAdapter = new MovieAdapter(this);
         mRecyclerView.setAdapter(mMovieAdapter);
+        mRecyclerView.setHasFixedSize(true);
 
         loadMovieData(NetworkUtils.Sort.POPULAR.name());
     }
@@ -59,6 +60,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void onClick(Movie movie) {
+        Class destinationClass = MovieDetailActivity.class;
+        Intent intentToStartDetailActivity = new Intent(this, destinationClass);
+        intentToStartDetailActivity.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie);
+        startActivity(intentToStartDetailActivity);
+    }
 
     private void showErrorMessage(String message) {
         /* First, hide the currently visible data */
@@ -70,12 +78,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onClick(String movie) {
-
-    }
-
-    public class FetchMovieTask extends AsyncTask<String, Void, String[]> {
+    @SuppressLint("StaticFieldLeak")
+    private class FetchMovieTask extends AsyncTask<String, Void, String[]> {
         private String errorMessage;
 
         @Override
@@ -92,15 +96,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             }
 
             String sortName = params[0];
-            URL weatherRequestUrl = NetworkUtils.buildUrl(NetworkUtils.Sort.valueOf(sortName));
+            URL url = NetworkUtils.buildUrl(NetworkUtils.Sort.valueOf(sortName));
 
             try {
-                String jsonResponse = NetworkUtils
-                        .getResponseFromHttpUrl(weatherRequestUrl);
+                String jsonResponse = NetworkUtils.getResponseFromHttpUrl(url);
 
-                String[] simpleData = MovieUtils.getListFromJson(jsonResponse);
-
-                return simpleData;
+                return MovieJsonUtils.getListFromJson(jsonResponse);
 
             } catch (Exception e) {
                 errorMessage = "Error: " + e.getMessage();
@@ -121,11 +122,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         }
     }
 
-
     /**
-     * Menu
+     * MENU
      */
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -147,6 +146,4 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 }
