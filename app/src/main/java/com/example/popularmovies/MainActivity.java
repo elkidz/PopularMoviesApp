@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.popularmovies.data.Movie;
 import com.example.popularmovies.utils.MovieJsonUtils;
 import com.example.popularmovies.utils.NetworkUtils;
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private void showMovieDataView() {
         /* First, make sure the error is invisible */
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
-        /* Then, make sure the weather data is visible */
+        /* Then, make sure the movie data is visible */
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
