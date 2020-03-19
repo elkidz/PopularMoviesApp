@@ -8,4 +8,5 @@
     <dimen name="line_1dp">1dp</dimen>
     <dimen name="textSize_regular">18sp</dimen>
     <dimen name="progressBar_size">42dp</dimen>
+    <dimen name="textSize_small">14sp</dimen>
 </resources>
