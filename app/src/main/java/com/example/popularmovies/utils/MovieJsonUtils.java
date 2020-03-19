@@ -1,6 +1,5 @@
 package com.example.popularmovies.utils;
 
-import com.example.popularmovies.Movie;
 import com.example.popularmovies.data.Movie;
 import com.example.popularmovies.data.Trailer;
 
