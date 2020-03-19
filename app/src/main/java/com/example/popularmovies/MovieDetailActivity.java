@@ -124,13 +124,13 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         }
 
         @Override
-        protected String[] doInBackground(String... params) {
+        protected String[] doInBackground(String... strings) {
 
-            if (params.length == 0) {
+            if (strings.length == 0) {
                 return null;
             }
 
-            String movieId = params[0];
+            String movieId = strings[0];
             URL url = NetworkUtils.buildTrailerUrl(movieId);
 
             try {
@@ -158,5 +158,39 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     }
 
     /* REVIEW STUFF */
+    private class FetchReviewTask extends AsyncTask<String, Void, String[]> {
+        private String errorMessage;
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String[] doInBackground(String... strings) {
+
+            if (strings.length == 0) {
+                return null;
+            }
+
+            String movieId = strings[0];
+            URL requestUrl = NetworkUtils.buildReviewUrl(movieId);
+
+            try {
+                String jsonResponse = NetworkUtils.getResponseFromHttpUrl(requestUrl);
+
+                return MovieJsonUtils.getListFromJson(jsonResponse);
+
+            } catch (Exception e) {
+                errorMessage = "Error: " + e.getMessage();
+                Log.d(TAG, errorMessage);
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
+        }
+    }
 }
