@@ -31,6 +31,7 @@ public final class NetworkUtils {
     private static final String POPULAR_PATH = "popular";
     private static final String TOP_RATED_PATH = "top_rated";
     private static final String TRAILER_PATH = "videos";
+    private static final String REVIEW_PATH = "reviews";
 
 
     /**
@@ -127,9 +128,9 @@ public final class NetworkUtils {
     }
 
     /**
-     * Builds youtube url
+     * Builds Youtube URL with the key provided from getTrailerFromJson()
      *
-     * @return Youtube URL
+     * @return The URL to use to query the The Movie DB.
      */
     public static Uri buildWatchUrl(String movieKey) {
         Uri builtUri = Uri.parse(YOUTUBE_BASE_URL).buildUpon()
@@ -147,6 +148,33 @@ public final class NetworkUtils {
         Log.v(TAG, "Built Youtube URI " + url);
 
         return builtUri;
+    }
+
+
+    /**
+     * Builds the URL reviews of a specific movie
+     *
+     * @return The URL to use to query the The Movie DB.
+     */
+    public static URL buildReviewUrl(String movieId) {
+        Uri builtUri = Uri.parse(MOVIE_DATABASE_URL).buildUpon()
+                .appendPath(API_VERSION)
+                .appendPath(MOVIE_PATH)
+                .appendPath(movieId)
+                .appendPath(REVIEW_PATH)
+                .appendQueryParameter(API_KEY_PARAM, API_KEY)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Log.v(TAG, "Built Review URI " + url);
+
+        return url;
     }
 
     /**

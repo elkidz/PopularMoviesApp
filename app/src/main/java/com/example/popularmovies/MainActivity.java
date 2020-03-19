@@ -139,9 +139,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         switch (item.getItemId()) {
             case R.id.action_sort_by_popular:
                 loadMovieData(NetworkUtils.Sort.POPULAR.name());
+                // Force going top when changing
+                mRecyclerView.smoothScrollToPosition(0);
                 return true;
             case R.id.action_sort_by_top_rated:
                 loadMovieData(NetworkUtils.Sort.TOP_RATED.name());
+                // Force going top when changing
+                mRecyclerView.smoothScrollToPosition(0);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -96,10 +96,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_trailers"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/rv_trailer_maximum_height"
             android:paddingStart="@dimen/padding_large"
             android:paddingEnd="@dimen/padding_large"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_trailer_label" />
@@ -125,5 +126,58 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_trailer_label" />
 
+        <!--This View serves as a visual divider between list items-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_1dp"
+            android:layout_marginStart="@dimen/padding_regular"
+            android:layout_marginEnd="@dimen/padding_regular"
+            android:background="@color/regularGrey"
+            app:layout_constraintBottom_toBottomOf="@+id/rv_trailers"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_review_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_regular"
+            android:paddingStart="@dimen/padding_regular"
+            android:paddingEnd="@dimen/padding_regular"
+            android:text="@string/reviews_label"
+            android:textSize="@dimen/textSize_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_trailers" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_reviews"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rv_review_maximum_height"
+            android:paddingStart="@dimen/padding_large"
+            android:paddingEnd="@dimen/padding_large"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_review_label" />
+
+        <TextView
+            android:id="@+id/tv_error_message_display_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_regular"
+            android:textSize="@dimen/textSize_regular"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_review_label" />
+
+        <ProgressBar
+            android:id="@+id/pb_loading_indicator_review"
+            android:layout_width="@dimen/progressBar_size"
+            android:layout_height="@dimen/progressBar_size"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_review_label" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

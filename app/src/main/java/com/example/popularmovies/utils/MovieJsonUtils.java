@@ -1,6 +1,7 @@
 package com.example.popularmovies.utils;
 
 import com.example.popularmovies.data.Movie;
+import com.example.popularmovies.data.Review;
 import com.example.popularmovies.data.Trailer;
 
 import org.json.JSONArray;
@@ -97,5 +98,27 @@ public final class MovieJsonUtils {
         trailer.setType(trailerJson.getString(TRAILER_TYPE));
 
         return trailer;
+    }
+
+    public static Review getReviewFromJson(String reviewJsonStr) throws JSONException {
+        final String REVIEW_ID = "id";
+        final String REVIEW_AUTHOR = "author";
+        final String REVIEW_CONTENT = "content";
+
+        JSONObject reviewJson = new JSONObject(reviewJsonStr);
+
+        /* Is there an error? */
+        if (!reviewJson.has(REVIEW_AUTHOR) && !reviewJson.has(REVIEW_CONTENT)) {
+            String message = "Invalid JSON Object.";
+
+            throw new JSONException(message);
+        }
+
+        Review review = new Review();
+        review.setId(reviewJson.getString(REVIEW_ID));
+        review.setAuthor(reviewJson.getString(REVIEW_AUTHOR));
+        review.setContent(reviewJson.getString(REVIEW_CONTENT));
+
+        return review;
     }
 }
