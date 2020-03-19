@@ -55,7 +55,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
         /* TRAILER */
         mRecyclerViewTrailer = findViewById(R.id.rv_trailers);
-        //mRecyclerView.setHasFixedSize(true);
         mTrailerAdapter = new TrailerAdapter(this);
         mRecyclerViewTrailer.setAdapter(mTrailerAdapter);
         // Disable scrolling
@@ -66,7 +65,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
         /* REVIEW */
         mRecyclerViewReview = findViewById(R.id.rv_reviews);
-        //mRecyclerViewReview.setHasFixedSize(true);
         mReviewAdapter = new ReviewAdapter();
         mRecyclerViewReview.setAdapter(mReviewAdapter);
 
