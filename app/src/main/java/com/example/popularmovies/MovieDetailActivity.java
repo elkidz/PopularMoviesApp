@@ -78,7 +78,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         }
     }
 
-    /* TRAILER STUFF*/
+    /* TRAILER STUFF */
 
     @Override
     public void onClick(Trailer trailer) {
@@ -156,4 +156,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
             }
         }
     }
+
+    /* REVIEW STUFF */
+
 }
