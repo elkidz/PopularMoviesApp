@@ -19,6 +19,10 @@ public final class NetworkUtils {
     private static final String POSTER_BASE_URL = "https://image.tmdb.org/t/p/";
     private static final String POSTER_SIZE = "w185";
 
+    private static final String YOUTUBE_BASE_URL = "https://www.youtube.com";
+    private static final String WATCH_PATH = "watch";
+    private static final String VIDEO_PARAM = "v";
+
     private static final String API_KEY_PARAM = "api_key";
     private static final String API_KEY = "ab985f7eb8de45b5e0d7d35e611f2a8e";
     private static final String API_VERSION = "3";
@@ -97,6 +101,7 @@ public final class NetworkUtils {
 
     /**
      * Builds the URL used to return the trailer
+     *
      * @param movieId
      * @return The URL of the trailer
      */
@@ -119,6 +124,29 @@ public final class NetworkUtils {
         Log.v(TAG, "Built Trailer URI " + url);
 
         return url;
+    }
+
+    /**
+     * Builds youtube url
+     *
+     * @return Youtube URL
+     */
+    public static Uri buildWatchUrl(String movieKey) {
+        Uri builtUri = Uri.parse(YOUTUBE_BASE_URL).buildUpon()
+                .appendPath(WATCH_PATH)
+                .appendQueryParameter(VIDEO_PARAM, movieKey)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Log.v(TAG, "Built Youtube URI " + url);
+
+        return builtUri;
     }
 
     /**
