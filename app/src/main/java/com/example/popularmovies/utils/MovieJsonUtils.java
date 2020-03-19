@@ -1,6 +1,8 @@
 package com.example.popularmovies.utils;
 
 import com.example.popularmovies.Movie;
+import com.example.popularmovies.data.Movie;
+import com.example.popularmovies.data.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,5 +71,30 @@ public final class MovieJsonUtils {
         movie.setOverview(movieJson.getString(MOVIE_OVERVIEW));
 
         return movie;
+    }
+
+    public static Trailer getTrailerFromJson(String trailerJsonStr) throws JSONException {
+
+        final String TRAILER_ID = "id";
+        final String TRAILER_KEY = "key";
+        final String TRAILER_NAME = "name";
+        final String TRAILER_TYPE = "type";
+
+        JSONObject trailerJson = new JSONObject(trailerJsonStr);
+
+        /* Is there an error? */
+        if (!trailerJson.has(TRAILER_NAME) && !trailerJson.has(TRAILER_KEY)) {
+            String message = "Invalid JSON Object.";
+
+            throw new JSONException(message);
+        }
+
+        Trailer trailer = new Trailer();
+        trailer.setId(trailerJson.getString(TRAILER_ID));
+        trailer.setKey(trailerJson.getString(TRAILER_KEY));
+        trailer.setName(trailerJson.getString(TRAILER_NAME));
+        trailer.setType(trailerJson.getString(TRAILER_TYPE));
+
+        return trailer;
     }
 }
