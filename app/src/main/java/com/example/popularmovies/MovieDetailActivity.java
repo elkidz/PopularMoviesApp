@@ -1,5 +1,6 @@
 package com.example.popularmovies;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -28,10 +29,15 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     public static final String EXTRA_MOVIE = "com.example.popularmovies.Movie";
 
     private TrailerAdapter mTrailerAdapter;
+    private ReviewAdapter mReviewAdapter;
 
     private RecyclerView mRecyclerView;
     private TextView mErrorMessageDisplay;
     private ProgressBar mLoadingIndicator;
+
+    private RecyclerView mRecyclerViewReview;
+    private TextView mErrorMessageDisplayReview;
+    private ProgressBar mLoadingIndicatorReview;
 
     private Movie mMovie;
 
@@ -40,19 +46,30 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
+        /* MOVIE */
         TextView mTitle = findViewById(R.id.tv_detail_title);
         TextView mReleaseDate = findViewById(R.id.tv_detail_release_date);
         TextView mVoteAverage = findViewById(R.id.tv_detail_vote_average);
         TextView mOverview = findViewById(R.id.tv_detail_overview);
         ImageView mImagePoster = findViewById(R.id.iv_detail_movie_poster);
 
-        mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
-        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
-
+        /* TRAILER */
         mRecyclerView = findViewById(R.id.rv_trailers);
         mRecyclerView.setHasFixedSize(true);
         mTrailerAdapter = new TrailerAdapter(this);
         mRecyclerView.setAdapter(mTrailerAdapter);
+
+        mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
+        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
+
+        /* REVIEW */
+        mRecyclerViewReview = findViewById(R.id.rv_reviews);
+        mRecyclerView.setHasFixedSize(true);
+        mReviewAdapter = new ReviewAdapter();
+        mRecyclerViewReview.setAdapter(mReviewAdapter);
+
+        mErrorMessageDisplayReview = findViewById(R.id.tv_error_message_display_review);
+        mLoadingIndicatorReview = findViewById(R.id.pb_loading_indicator_review);
 
         // Remove back arrow from action bar
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
@@ -73,6 +90,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                             .into(mImagePoster);
 
                     loadTrailerData();
+
+                    loadReviewData();
                 }
             }
         }
@@ -114,6 +133,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     /**
      * Fetch trailers with AsyncTask
      */
+    @SuppressLint("StaticFieldLeak")
     private class FetchTrailerTask extends AsyncTask<String, Void, String[]> {
         private String errorMessage;
 
@@ -158,12 +178,38 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     }
 
     /* REVIEW STUFF */
+
+    private void loadReviewData() {
+        showReviewDataView();
+
+        new FetchReviewTask().execute(String.valueOf(mMovie.getId()));
+    }
+
+    private void showErrorMessageReview(String message) {
+        /* First, hide the currently visible data */
+        mRecyclerViewReview.setVisibility(View.INVISIBLE);
+        /* Then, show the error */
+        if (message != null) {
+            mErrorMessageDisplayReview.setText(message);
+        }
+        mErrorMessageDisplayReview.setVisibility(View.VISIBLE);
+    }
+
+    private void showReviewDataView() {
+        /* First, make sure the error is invisible */
+        mErrorMessageDisplayReview.setVisibility(View.INVISIBLE);
+        /* Then, make sure the trailer data is visible */
+        mRecyclerViewReview.setVisibility(View.VISIBLE);
+    }
+
+    @SuppressLint("StaticFieldLeak")
     private class FetchReviewTask extends AsyncTask<String, Void, String[]> {
         private String errorMessage;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            mLoadingIndicatorReview.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -189,8 +235,15 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         }
 
         @Override
-        protected void onPostExecute(String[] strings) {
-            super.onPostExecute(strings);
+        protected void onPostExecute(String[] reviewData) {
+            super.onPostExecute(reviewData);
+            mLoadingIndicatorReview.setVisibility(View.INVISIBLE);
+            if (reviewData != null) {
+                showReviewDataView();
+                mReviewAdapter.setReviewData(reviewData);
+            } else {
+                showErrorMessageReview(errorMessage);
+            }
         }
     }
 }
