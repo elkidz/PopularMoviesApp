@@ -17,7 +17,6 @@ public final class NetworkUtils {
     private static final String MOVIE_DATABASE_URL = "https://api.themoviedb.org";
 
     private static final String POSTER_BASE_URL = "https://image.tmdb.org/t/p/";
-
     private static final String POSTER_SIZE = "w185";
 
     private static final String API_KEY_PARAM = "api_key";
@@ -27,6 +26,7 @@ public final class NetworkUtils {
     private static final String MOVIE_PATH = "movie";
     private static final String POPULAR_PATH = "popular";
     private static final String TOP_RATED_PATH = "top_rated";
+    private static final String TRAILER_PATH = "videos";
 
 
     /**
@@ -75,7 +75,7 @@ public final class NetworkUtils {
     /**
      * Builds the URL used to return the Movie poster
      *
-     * @return The URL to of the image
+     * @return The URL of the image
      */
     static URL buildImageUrl(String imageFile) {
         Uri builtUri = Uri.parse(POSTER_BASE_URL).buildUpon()
@@ -91,6 +91,32 @@ public final class NetworkUtils {
         }
 
         Log.v(TAG, "Built URI " + url);
+
+        return url;
+    }
+
+    /**
+     * Builds the URL used to return the trailer
+     * @param movieId
+     * @return The URL of the trailer
+     */
+    public static URL buildTrailerUrl(String movieId) {
+        Uri builtUri = Uri.parse(MOVIE_DATABASE_URL).buildUpon()
+                .appendPath(API_VERSION)
+                .appendPath(MOVIE_PATH)
+                .appendPath(movieId)
+                .appendPath(TRAILER_PATH)
+                .appendQueryParameter(API_KEY_PARAM, API_KEY)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Log.v(TAG, "Built Trailer URI " + url);
 
         return url;
     }
