@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.popularmovies.data.Movie;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
