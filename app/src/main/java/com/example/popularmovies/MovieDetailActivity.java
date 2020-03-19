@@ -202,6 +202,9 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         mRecyclerViewReview.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Fetch reviews with AsyncTask
+     */
     @SuppressLint("StaticFieldLeak")
     private class FetchReviewTask extends AsyncTask<String, Void, String[]> {
         private String errorMessage;
