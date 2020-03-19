@@ -31,7 +31,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     private TrailerAdapter mTrailerAdapter;
     private ReviewAdapter mReviewAdapter;
 
-    private RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerViewTrailer;
     private TextView mErrorMessageDisplay;
     private ProgressBar mLoadingIndicator;
 
@@ -54,17 +54,19 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         ImageView mImagePoster = findViewById(R.id.iv_detail_movie_poster);
 
         /* TRAILER */
-        mRecyclerView = findViewById(R.id.rv_trailers);
-        mRecyclerView.setHasFixedSize(true);
+        mRecyclerViewTrailer = findViewById(R.id.rv_trailers);
+        //mRecyclerView.setHasFixedSize(true);
         mTrailerAdapter = new TrailerAdapter(this);
-        mRecyclerView.setAdapter(mTrailerAdapter);
+        mRecyclerViewTrailer.setAdapter(mTrailerAdapter);
+        // Disable scrolling
+        mRecyclerViewTrailer.setNestedScrollingEnabled(false);
 
         mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
 
         /* REVIEW */
         mRecyclerViewReview = findViewById(R.id.rv_reviews);
-        mRecyclerView.setHasFixedSize(true);
+        //mRecyclerViewReview.setHasFixedSize(true);
         mReviewAdapter = new ReviewAdapter();
         mRecyclerViewReview.setAdapter(mReviewAdapter);
 
@@ -115,7 +117,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
     private void showErrorMessageTrailer(String message) {
         /* First, hide the currently visible data */
-        mRecyclerView.setVisibility(View.INVISIBLE);
+        mRecyclerViewTrailer.setVisibility(View.INVISIBLE);
         /* Then, show the error */
         if (message != null) {
             mErrorMessageDisplay.setText(message);
@@ -127,7 +129,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         /* First, make sure the error is invisible */
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
         /* Then, make sure the trailer data is visible */
-        mRecyclerView.setVisibility(View.VISIBLE);
+        mRecyclerViewTrailer.setVisibility(View.VISIBLE);
     }
 
     /**
