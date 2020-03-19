@@ -57,8 +57,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         mRecyclerViewTrailer = findViewById(R.id.rv_trailers);
         mTrailerAdapter = new TrailerAdapter(this);
         mRecyclerViewTrailer.setAdapter(mTrailerAdapter);
-        // Disable scrolling
-        mRecyclerViewTrailer.setNestedScrollingEnabled(false);
 
         mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);

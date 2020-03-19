@@ -9,4 +9,6 @@
     <dimen name="textSize_regular">18sp</dimen>
     <dimen name="progressBar_size">42dp</dimen>
     <dimen name="textSize_small">14sp</dimen>
+    <dimen name="rv_review_maximum_height">350dp</dimen>
+    <dimen name="rv_trailer_maximum_height">180dp</dimen>
 </resources>
