@@ -128,9 +128,9 @@ public final class NetworkUtils {
     }
 
     /**
-     * Builds youtube url
+     * Builds Youtube URL with the key provided from getTrailerFromJson()
      *
-     * @return Youtube URL
+     * @return The URL to use to query the The Movie DB.
      */
     public static Uri buildWatchUrl(String movieKey) {
         Uri builtUri = Uri.parse(YOUTUBE_BASE_URL).buildUpon()
