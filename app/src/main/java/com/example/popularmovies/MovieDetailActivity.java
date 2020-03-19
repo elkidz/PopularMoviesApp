@@ -1,6 +1,7 @@
 package com.example.popularmovies;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,15 +9,18 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.popularmovies.data.Movie;
+import com.example.popularmovies.data.Trailer;
+import com.example.popularmovies.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
-public class MovieDetailActivity extends AppCompatActivity {
+public class MovieDetailActivity extends AppCompatActivity implements TrailerAdapter.TrailerAdapterOnClickHandler{
 
+    private static final String TAG = MovieDetailActivity.class.getSimpleName();
     public static final String EXTRA_MOVIE = "com.example.popularmovies.Movie";
 
-    // TODO Fragment for this
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,4 +56,11 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick(Trailer trailer) {
+        Uri youtubeUri = NetworkUtils.buildWatchUrl(trailer.getKey());
+
+        Intent intentToWatchTrailer = new Intent(Intent.ACTION_VIEW, youtubeUri);
+        startActivity(intentToWatchTrailer);
+    }
 }
