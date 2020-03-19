@@ -61,7 +61,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
         if (intentThatStartedThisActivity != null) {
             if (intentThatStartedThisActivity.hasExtra(EXTRA_MOVIE)) {
-                Movie mMovie = (Movie) intentThatStartedThisActivity.getSerializableExtra(EXTRA_MOVIE);
+                mMovie = (Movie) intentThatStartedThisActivity.getSerializableExtra(EXTRA_MOVIE);
                 if (mMovie != null) {
                     mTitle.setText(mMovie.getTitle());
                     mReleaseDate.setText(mMovie.getReleaseDate());
