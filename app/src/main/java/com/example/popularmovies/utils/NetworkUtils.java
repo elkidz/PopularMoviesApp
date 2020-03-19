@@ -17,8 +17,11 @@ public final class NetworkUtils {
     private static final String MOVIE_DATABASE_URL = "https://api.themoviedb.org";
 
     private static final String POSTER_BASE_URL = "https://image.tmdb.org/t/p/";
-
     private static final String POSTER_SIZE = "w185";
+
+    private static final String YOUTUBE_BASE_URL = "https://www.youtube.com";
+    private static final String WATCH_PATH = "watch";
+    private static final String VIDEO_PARAM = "v";
 
     private static final String API_KEY_PARAM = "api_key";
     private static final String API_KEY = "ab985f7eb8de45b5e0d7d35e611f2a8e";
@@ -27,6 +30,7 @@ public final class NetworkUtils {
     private static final String MOVIE_PATH = "movie";
     private static final String POPULAR_PATH = "popular";
     private static final String TOP_RATED_PATH = "top_rated";
+    private static final String TRAILER_PATH = "videos";
 
 
     /**
@@ -75,7 +79,7 @@ public final class NetworkUtils {
     /**
      * Builds the URL used to return the Movie poster
      *
-     * @return The URL to of the image
+     * @return The URL of the image
      */
     static URL buildImageUrl(String imageFile) {
         Uri builtUri = Uri.parse(POSTER_BASE_URL).buildUpon()
@@ -93,6 +97,56 @@ public final class NetworkUtils {
         Log.v(TAG, "Built URI " + url);
 
         return url;
+    }
+
+    /**
+     * Builds the URL used to return the trailer
+     *
+     * @param movieId
+     * @return The URL of the trailer
+     */
+    public static URL buildTrailerUrl(String movieId) {
+        Uri builtUri = Uri.parse(MOVIE_DATABASE_URL).buildUpon()
+                .appendPath(API_VERSION)
+                .appendPath(MOVIE_PATH)
+                .appendPath(movieId)
+                .appendPath(TRAILER_PATH)
+                .appendQueryParameter(API_KEY_PARAM, API_KEY)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Log.v(TAG, "Built Trailer URI " + url);
+
+        return url;
+    }
+
+    /**
+     * Builds youtube url
+     *
+     * @return Youtube URL
+     */
+    public static Uri buildWatchUrl(String movieKey) {
+        Uri builtUri = Uri.parse(YOUTUBE_BASE_URL).buildUpon()
+                .appendPath(WATCH_PATH)
+                .appendQueryParameter(VIDEO_PARAM, movieKey)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Log.v(TAG, "Built Youtube URI " + url);
+
+        return builtUri;
     }
 
     /**

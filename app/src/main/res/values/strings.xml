@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Popular Movies App</string>
     <string name="image_description">Movie poster</string>
-    <string name="menu_sort_popular">Sort by popular</string>
-    <string name="menu_sort_top_rated">Sort by top rated</string>
+    <string name="menu_sort_popular">Most popular</string>
+    <string name="menu_sort_top_rated">Highest rated</string>
+    <string name="trailers_label">Trailers:</string>
+    <string name="reviews_label">Reviews:</string>
+    <string name="from">From:</string>
 </resources>
