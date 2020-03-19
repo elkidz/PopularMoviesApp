@@ -34,11 +34,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     private ProgressBar mLoadingIndicator;
 
     private Movie mMovie;
-    private TextView mTitle;
-    private TextView mReleaseDate;
-    private TextView mVoteAverage;
-    private TextView mSynopsis;
-    private ImageView mImagePoster;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +45,14 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         TextView mVoteAverage = findViewById(R.id.tv_detail_vote_average);
         TextView mOverview = findViewById(R.id.tv_detail_overview);
         ImageView mImagePoster = findViewById(R.id.iv_detail_movie_poster);
+
+        mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
+        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
+
+        mRecyclerView = findViewById(R.id.rv_trailers);
+        mRecyclerView.setHasFixedSize(true);
+        mTrailerAdapter = new TrailerAdapter(this);
+        mRecyclerView.setAdapter(mTrailerAdapter);
 
         // Remove back arrow from action bar
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);

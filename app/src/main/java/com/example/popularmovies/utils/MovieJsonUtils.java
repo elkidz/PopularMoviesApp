@@ -46,7 +46,8 @@ public final class MovieJsonUtils {
     }
 
     public static Movie getMovieFromJson(String movieJsonStr) throws JSONException {
-
+        
+        final String MOVIE_ID = "id";
         final String MOVIE_RELEASE_DATE = "release_date";
         final String MOVIE_TITLE = "title";
         final String MOVIE_VOTE_AVERAGE = "vote_average";
