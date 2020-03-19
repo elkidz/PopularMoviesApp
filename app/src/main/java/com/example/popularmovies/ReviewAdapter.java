@@ -49,12 +49,19 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewAdap
         return mReviewData.length;
     }
 
-    private class ReviewAdapterViewHolder extends RecyclerView.ViewHolder {
+    void setReviewData(String[] reviewData) {
+        mReviewData = reviewData;
+        notifyDataSetChanged();
+    }
+
+    static class ReviewAdapterViewHolder extends RecyclerView.ViewHolder {
         final TextView mReviewAuthor;
         final TextView mReviewContent;
 
-        public ReviewAdapterViewHolder(View view) {
+        ReviewAdapterViewHolder(View view) {
             super(view);
+            mReviewAuthor = view.findViewById(R.id.tv_review_author);
+            mReviewContent = view.findViewById(R.id.tv_review_content);
         }
     }
 }
