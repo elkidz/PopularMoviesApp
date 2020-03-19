@@ -46,7 +46,7 @@ public final class MovieJsonUtils {
     }
 
     public static Movie getMovieFromJson(String movieJsonStr) throws JSONException {
-        
+
         final String MOVIE_ID = "id";
         final String MOVIE_RELEASE_DATE = "release_date";
         final String MOVIE_TITLE = "title";
@@ -64,6 +64,7 @@ public final class MovieJsonUtils {
         }
 
         Movie movie = new Movie();
+        movie.setId(movieJson.getInt(MOVIE_ID));
         movie.setTitle(movieJson.getString(MOVIE_TITLE));
         movie.setVoteAverage(movieJson.getDouble(MOVIE_VOTE_AVERAGE));
         movie.setPoster(NetworkUtils.buildImageUrl(movieJson.getString(MOVIE_POSTER).replace("/", "")).toString());
