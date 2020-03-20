@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.popularmovies.data.Movie;
+import com.example.popularmovies.data.database.Movie;
 import com.example.popularmovies.utils.MovieJsonUtils;
 import com.squareup.picasso.Picasso;
 

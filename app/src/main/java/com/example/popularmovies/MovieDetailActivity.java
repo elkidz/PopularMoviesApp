@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.popularmovies.data.Movie;
+import com.example.popularmovies.data.database.Movie;
 import com.example.popularmovies.data.Trailer;
 import com.example.popularmovies.utils.MovieJsonUtils;
 import com.example.popularmovies.utils.NetworkUtils;
