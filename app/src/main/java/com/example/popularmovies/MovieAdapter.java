@@ -10,14 +10,14 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.popularmovies.data.Movie;
 import com.example.popularmovies.utils.MovieJsonUtils;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
 /**
- * {@link MovieAdapter} exposes a list of movies
- * {@link androidx.recyclerview.widget.RecyclerView}
+ * Exposes list of movies
  */
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.popularmovies.data.Movie;
 import com.example.popularmovies.utils.MovieJsonUtils;
 import com.example.popularmovies.utils.NetworkUtils;
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private void showMovieDataView() {
         /* First, make sure the error is invisible */
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
-        /* Then, make sure the weather data is visible */
+        /* Then, make sure the movie data is visible */
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
@@ -138,9 +139,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         switch (item.getItemId()) {
             case R.id.action_sort_by_popular:
                 loadMovieData(NetworkUtils.Sort.POPULAR.name());
+                // Force going top when changing
+                mRecyclerView.smoothScrollToPosition(0);
                 return true;
             case R.id.action_sort_by_top_rated:
                 loadMovieData(NetworkUtils.Sort.TOP_RATED.name());
+                // Force going top when changing
+                mRecyclerView.smoothScrollToPosition(0);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
