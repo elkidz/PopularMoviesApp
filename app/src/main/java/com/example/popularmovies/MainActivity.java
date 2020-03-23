@@ -1,8 +1,6 @@
 package com.example.popularmovies;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -10,8 +8,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -19,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.popularmovies.data.database.Movie;
 import com.example.popularmovies.utils.InjectorUtils;
-import com.example.popularmovies.utils.MovieJsonUtils;
 import com.example.popularmovies.utils.NetworkUtils;
 import com.example.popularmovies.viewmodel.MainActivityViewModel;
 import com.example.popularmovies.viewmodel.MainViewModelFactory;
@@ -60,6 +55,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             showData();
         });
 
+        mViewModel.getMoviesFavorite().observe(this, movies -> {
+            mMoviesFavorite = movies;
+            showData();
+        });
+
         Log.d(LOG_TAG, "Main activity created");
     }
 
@@ -72,9 +72,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         }
         mMovieAdapter.setMovieData(movies);
         if (movies != null && movies.size() != 0) showMovieDataView();
-        else Toast.makeText(getApplicationContext(),
-                "No favorites",
-                Toast.LENGTH_LONG).show();
+        else showLoading();
     }
 
     private void showMovieDataView() {
