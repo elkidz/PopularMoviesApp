@@ -7,4 +7,7 @@
     <string name="reviews_label">Reviews:</string>
     <string name="from">From:</string>
     <string name="review_author_label">From:</string>
+    <string name="image_favorite">Favorite</string>
+    <string name="vote_average_format">%.1f/10</string>
+    <string name="menu_sort_favorite">Show favorites</string>
 </resources>

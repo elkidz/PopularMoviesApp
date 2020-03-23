@@ -1,6 +1,6 @@
 package com.example.popularmovies.utils;
 
-import com.example.popularmovies.data.Movie;
+import com.example.popularmovies.data.database.Movie;
 import com.example.popularmovies.data.Review;
 import com.example.popularmovies.data.Trailer;
 
@@ -8,17 +8,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class MovieJsonUtils {
 
-    /**
-     * This method parses JSON from a web response and returns an array of Strings
-     * describing the details about a specific movie.
-     *
-     * @param movieJsonStr JSON response from server
-     * @return Array of Strings describing weather data
-     * @throws JSONException If JSON data cannot be properly parsed
-     */
-    public static String[] getListFromJson(String movieJsonStr) throws JSONException {
+    public static String[] getListFromJson(String jsonStr) throws JSONException {
 
         final String RESULT_LIST = "results";
         final String STATUS_CODE = "status_code";
@@ -26,7 +21,7 @@ public final class MovieJsonUtils {
 
         String[] parsedData;
 
-        JSONObject movieJson = new JSONObject(movieJsonStr);
+        JSONObject movieJson = new JSONObject(jsonStr);
 
         /* Is there an error? */
         if (movieJson.has(STATUS_CODE) && movieJson.has(STATUS_MESSAGE)) {
@@ -35,21 +30,60 @@ public final class MovieJsonUtils {
             throw new JSONException(message);
         }
 
-        JSONArray movieArray = movieJson.getJSONArray(RESULT_LIST);
+        JSONArray resultArray = movieJson.getJSONArray(RESULT_LIST);
 
-        parsedData = new String[movieArray.length()];
+        parsedData = new String[resultArray.length()];
 
-        for (int i = 0; i < movieArray.length(); i++) {
-            parsedData[i] = movieArray.getJSONObject(i).toString();
+        for (int i = 0; i < resultArray.length(); i++) {
+            parsedData[i] = resultArray.getJSONObject(i).toString();
         }
 
         return parsedData;
     }
 
+    public static List<Movie> getMoviesFromJson(String moviesJsonStr) throws JSONException {
+
+        String[] resultArray = getListFromJson(moviesJsonStr);
+
+        List<Movie> movies = new ArrayList<>();
+
+        for (String s : resultArray) {
+            movies.add(getMovieFromJson(s));
+        }
+
+        return movies;
+    }
+
+    public static List<Trailer> getTrailersFromJson(String trailersJsonStr) throws JSONException {
+
+        String[] resultArray = getListFromJson(trailersJsonStr);
+
+        List<Trailer> trailers = new ArrayList<>();
+
+        for (String s : resultArray) {
+            trailers.add(getTrailerFromJson(s));
+        }
+
+        return trailers;
+    }
+
+    public static List<Review> getReviewsFromJson(String reviewsJsonStr) throws JSONException {
+
+        String[] resultArray = getListFromJson(reviewsJsonStr);
+
+        List<Review> reviews = new ArrayList<>();
+
+        for (String s : resultArray) {
+            reviews.add(getReviewFromJson(s));
+        }
+
+        return reviews;
+    }
+
     public static Movie getMovieFromJson(String movieJsonStr) throws JSONException {
 
-        final String MOVIE_ID = "id";
         final String MOVIE_RELEASE_DATE = "release_date";
+        final String MOVIE_ID = "id";
         final String MOVIE_TITLE = "title";
         final String MOVIE_VOTE_AVERAGE = "vote_average";
         final String MOVIE_POSTER = "poster_path";
@@ -99,6 +133,7 @@ public final class MovieJsonUtils {
 
         return trailer;
     }
+
 
     public static Review getReviewFromJson(String reviewJsonStr) throws JSONException {
         final String REVIEW_ID = "id";

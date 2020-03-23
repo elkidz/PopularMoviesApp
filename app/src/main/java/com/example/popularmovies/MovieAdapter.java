@@ -10,11 +10,11 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.popularmovies.data.Movie;
-import com.example.popularmovies.utils.MovieJsonUtils;
+import com.example.popularmovies.data.database.Movie;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
+
+import java.util.List;
 
 /**
  * Exposes list of movies
@@ -22,7 +22,7 @@ import org.json.JSONException;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
     private final MovieAdapterOnClickHandler mClickHandler;
-    private String[] mMovieData;
+    private List<Movie> mMovieData;
 
     MovieAdapter(MovieAdapterOnClickHandler clickHandler) {
         mClickHandler = clickHandler;
@@ -30,7 +30,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
     @NonNull
     @Override
-    public MovieAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public MovieAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         Context context = viewGroup.getContext();
         int layoutIdForListItem = R.layout.movie_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -40,28 +40,24 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieAdapterViewHolder movieAdapterViewHolder, int position) {
-        String movieJson = mMovieData[position];
+    public void onBindViewHolder(MovieAdapterViewHolder movieAdapterViewHolder, int position) {
+        Movie movie = mMovieData.get(position);
+        movieAdapterViewHolder.mMovieImageView.setContentDescription(movie.getTitle());
 
-        try {
-            Movie movie = MovieJsonUtils.getMovieFromJson(movieJson);
-            Picasso.get().setLoggingEnabled(true);
-            Picasso.get()
-                    .load(movie.getPoster())
-                    .into(movieAdapterViewHolder.mMovieImageView);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        Picasso.get()
+                .load(movie.getPoster())
+                .into(movieAdapterViewHolder.mMovieImageView);
+
     }
 
     @Override
     public int getItemCount() {
         if (null == mMovieData) return 0;
-        return mMovieData.length;
+        return mMovieData.size();
     }
 
 
-    void setMovieData(String[] movieData) {
+    void setMovieData(List<Movie> movieData) {
         mMovieData = movieData;
         notifyDataSetChanged();
     }
@@ -82,14 +78,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            String movieJson = mMovieData[adapterPosition];
-            try {
-                Movie movie = MovieJsonUtils.getMovieFromJson(movieJson);
-
-                mClickHandler.onClick(movie);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            Movie movie = mMovieData.get(adapterPosition);
+            mClickHandler.onClick(movie);
         }
     }
 }
