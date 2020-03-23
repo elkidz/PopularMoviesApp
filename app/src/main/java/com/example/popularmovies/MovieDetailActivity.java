@@ -62,7 +62,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                 if (mMovie != null) {
                     MovieDetailViewModelFactory factory = InjectorUtils.provideMovieDetailViewModelFactory(this.getApplicationContext(), mMovie.getId());
                     mViewModel = new ViewModelProvider(this,factory).get(MovieDetailActivityViewModel.class);
-                    ViewModelProviders
 
                     bindToUI();
 
