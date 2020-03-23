@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private void showLoading() {
         Log.d(LOG_TAG, "Loading");
         mRecyclerView.setVisibility(View.INVISIBLE);
-        // Show the loading indicator
         mLoadingIndicator.setVisibility(View.VISIBLE);
     }
 
@@ -112,12 +111,18 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         switch (item.getItemId()) {
             case R.id.action_sort_by_popular:
                 mViewModel.fetchMovies(NetworkUtils.Sort.POPULAR.name());
+                mViewModel.setShowFavorite(false);
                 // Force going top when changing
                 mRecyclerView.smoothScrollToPosition(0);
                 return true;
             case R.id.action_sort_by_top_rated:
                 mViewModel.fetchMovies(NetworkUtils.Sort.TOP_RATED.name());
-                // Force going top when changing
+                mViewModel.setShowFavorite(false);
+                mRecyclerView.smoothScrollToPosition(0);
+                return true;
+            case R.id.action_sort_favorite:
+                mViewModel.setShowFavorite(true);
+                showData();
                 mRecyclerView.smoothScrollToPosition(0);
                 return true;
             default:
