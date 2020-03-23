@@ -33,22 +33,9 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     private TrailerAdapter mTrailerAdapter;
     private ReviewAdapter mReviewAdapter;
 
-    private RecyclerView mRecyclerView;
-    private TextView mErrorMessageDisplay;
-    private ProgressBar mLoadingIndicator;
-
-    private RecyclerView mRecyclerViewReview;
-    private TextView mErrorMessageDisplayReview;
-    private ProgressBar mLoadingIndicatorReview;
     private MovieDetailActivityViewModel mViewModel;
 
     private Movie mMovie;
-    private TextView mTitle;
-    private TextView mReleaseDate;
-    private TextView mVoteAverage;
-    private TextView mOverview;
-    private ImageView mImagePoster;
-    private ImageView mImageFavorite;
 
     private ActivityMovieDetailBinding mDetailBinding;
 
@@ -106,16 +93,16 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
         Picasso.get()
                 .load(mMovie.getPoster())
-                .into(mImagePoster);
+                .into(mDetailBinding.ivDetailMoviePoster);
 
         mViewModel.isFavorite().observe(this, isFavorite -> {
             Log.d(LOG_TAG, "Movie isFavorite: " + isFavorite);
             if (isFavorite) {
-                mImageFavorite.setImageResource(R.drawable.ic_star_black_48dp);
+                mDetailBinding.ivFavorite.setImageResource(R.drawable.ic_star_black_48dp);
             } else {
-                mImageFavorite.setImageResource(R.drawable.ic_star_border_black_48dp);
+                mDetailBinding.ivFavorite.setImageResource(R.drawable.ic_star_border_black_48dp);
             }
-            mImageFavorite.setVisibility(View.VISIBLE);
+            mDetailBinding.ivFavorite.setVisibility(View.VISIBLE);
         });
     }
 
@@ -136,10 +123,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     }
 
     private void showTrailerDataView() {
-        /* First, make sure the error is invisible */
-        mErrorMessageDisplay.setVisibility(View.INVISIBLE);
-        /* Then, make sure the trailer data is visible */
-        mRecyclerView.setVisibility(View.VISIBLE);
+        mDetailBinding.rvTrailers.setVisibility(View.VISIBLE);
     }
 
     private void loadReviewData() {
@@ -151,9 +135,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     }
 
     private void showReviewDataView() {
-        /* First, make sure the error is invisible */
-        mErrorMessageDisplayReview.setVisibility(View.INVISIBLE);
-        /* Then, make sure the trailer data is visible */
-        mRecyclerViewReview.setVisibility(View.VISIBLE);
+        mDetailBinding.rvReviews.setVisibility(View.VISIBLE);
     }
 }
