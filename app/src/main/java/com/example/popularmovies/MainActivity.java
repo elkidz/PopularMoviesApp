@@ -19,7 +19,6 @@ import com.example.popularmovies.utils.NetworkUtils;
 import com.example.popularmovies.viewmodel.MainActivityViewModel;
 import com.example.popularmovies.viewmodel.MainViewModelFactory;
 
-import java.net.URL;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
