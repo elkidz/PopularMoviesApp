@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mRecyclerView.setAdapter(mMovieAdapter);
 
         MainViewModelFactory factory = InjectorUtils.provideMainActivityViewModelFactory(this.getApplicationContext());
-        mViewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
+        mViewModel = new ViewModelProvider(this, factory).get(MainActivityViewModel.class);
 
         mViewModel.getMovies().observe(this, movies -> {
             mMovies = movies;
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             case R.id.action_sort_by_popular:
                 mViewModel.fetchMovies(NetworkUtils.Sort.POPULAR.name());
                 mViewModel.setShowFavorite(false);
-                // Force going top when changing
+                // Force going top when switching sorts
                 mRecyclerView.smoothScrollToPosition(0);
                 return true;
             case R.id.action_sort_by_top_rated:

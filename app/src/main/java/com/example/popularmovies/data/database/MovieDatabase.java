@@ -18,17 +18,14 @@ public abstract class MovieDatabase extends RoomDatabase {
     private static MovieDatabase sInstance;
 
     public static MovieDatabase getInstance(Context context) {
-        Log.d(LOG_TAG, "Getting the database");
         if (sInstance == null) {
             synchronized (LOCK) {
                 sInstance = Room.databaseBuilder(context.getApplicationContext(),
                         MovieDatabase.class, MovieDatabase.DATABASE_NAME).build();
-                Log.d(LOG_TAG, "Made new database");
             }
         }
         return sInstance;
     }
 
-    // The associated DAOs for the database
     public abstract MovieDao movieDao();
 }

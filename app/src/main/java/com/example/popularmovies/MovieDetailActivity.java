@@ -8,6 +8,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.popularmovies.data.database.Movie;
@@ -60,7 +61,8 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
                 mMovie = (Movie) intentThatStartedThisActivity.getSerializableExtra(EXTRA_MOVIE);
                 if (mMovie != null) {
                     MovieDetailViewModelFactory factory = InjectorUtils.provideMovieDetailViewModelFactory(this.getApplicationContext(), mMovie.getId());
-                    mViewModel = ViewModelProviders.of(this, factory).get(MovieDetailActivityViewModel.class);
+                    mViewModel = new ViewModelProvider(this,factory).get(MovieDetailActivityViewModel.class);
+                    ViewModelProviders
 
                     bindToUI();
 

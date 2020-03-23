@@ -14,7 +14,6 @@ import java.util.List;
 public class MovieRepository {
     private static final String LOG_TAG = MovieRepository.class.getSimpleName();
 
-    // For Singleton instantiation
     private static final Object LOCK = new Object();
     private static MovieRepository sInstance;
     private final MovieDao mMovieDao;
@@ -32,11 +31,9 @@ public class MovieRepository {
     public synchronized static MovieRepository getInstance(
             MovieDao movieDao, MovieNetworkDataSource weatherNetworkDataSource,
             AppExecutors executors) {
-        Log.d(LOG_TAG, "Getting the repository");
         if (sInstance == null) {
             synchronized (LOCK) {
                 sInstance = new MovieRepository(movieDao, weatherNetworkDataSource, executors);
-                Log.d(LOG_TAG, "Made new repository");
             }
         }
         return sInstance;
