@@ -24,6 +24,7 @@ import com.example.popularmovies.viewmodel.MainActivityViewModel;
 import com.example.popularmovies.viewmodel.MainViewModelFactory;
 
 import java.net.URL;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
 
@@ -32,19 +33,20 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private RecyclerView mRecyclerView;
     private MovieAdapter mMovieAdapter;
 
-    private TextView mErrorMessageDisplay;
-
     private ProgressBar mLoadingIndicator;
     private MainActivityViewModel mViewModel;
+
+    private List<Movie> mMovies;
+    private List<Movie> mMoviesFavorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRecyclerView = findViewById(R.id.rv_movies);
-        mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
+
+        mRecyclerView = findViewById(R.id.rv_movies);
 
         mMovieAdapter = new MovieAdapter(this);
         mRecyclerView.setAdapter(mMovieAdapter);
@@ -53,14 +55,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mViewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
 
         mViewModel.getMovies().observe(this, movies -> {
-            mMovieAdapter.setMovieData(movies);
-            if (movies != null && movies.size() != 0) showMovieDataView();
-            else showLoading();
+            mMovies = movies;
+            showData();
         });
 
         Log.d(LOG_TAG, "Main activity created");
     }
-
+    
     private void showMovieDataView() {
         /* First, make sure the error is invisible */
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
