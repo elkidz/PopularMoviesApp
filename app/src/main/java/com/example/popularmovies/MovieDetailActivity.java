@@ -118,7 +118,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         mViewModel.getTrailers().observe(this, trailers -> {
             mTrailerAdapter.setTrailerData(trailers);
             if (trailers != null && trailers.size() != 0) showTrailerDataView();
-            else mLoadingIndicator.setVisibility(View.VISIBLE);
+            else mDetailBinding.pbLoadingIndicator.setVisibility(View.VISIBLE);
         });
     }
 
@@ -130,7 +130,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         mViewModel.getReviews().observe(this, reviews -> {
             mReviewAdapter.setReviewData(reviews);
             if (reviews != null && reviews.size() != 0) showReviewDataView();
-            else mLoadingIndicatorReview.setVisibility(View.VISIBLE);
+            else mDetailBinding.pbLoadingIndicatorReview.setVisibility(View.VISIBLE);
         });
     }
 
