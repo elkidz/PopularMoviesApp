@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,59 +36,28 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     private TrailerAdapter mTrailerAdapter;
     private ReviewAdapter mReviewAdapter;
 
-    private RecyclerView mRecyclerView;
-    private TextView mErrorMessageDisplay;
-    private ProgressBar mLoadingIndicator;
-
-    private RecyclerView mRecyclerViewReview;
-    private TextView mErrorMessageDisplayReview;
-    private ProgressBar mLoadingIndicatorReview;
     private MovieDetailActivityViewModel mViewModel;
 
+    private ActivityMovieDetailBinding mDetailBinding;
+
     private Movie mMovie;
-    private TextView mTitle;
-    private TextView mReleaseDate;
-    private TextView mVoteAverage;
-    private TextView mOverview;
-    private ImageView mImagePoster;
-    private ImageView mImageFavorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-
-        mTitle = findViewById(R.id.tv_detail_title);
-        mReleaseDate = findViewById(R.id.tv_detail_release_date);
-        mVoteAverage = findViewById(R.id.tv_detail_vote_average);
-        mOverview = findViewById(R.id.tv_detail_overview);
-        mImagePoster = findViewById(R.id.iv_detail_movie_poster);
-        mImageFavorite = findViewById(R.id.iv_favorite);
-        mImageFavorite.setOnClickListener(view -> {
-            Log.d(LOG_TAG, "Movie favorite clicked: " + mMovie.getId());
-            mViewModel.setFavorite(mMovie);
-        });
-
-        mRecyclerView = findViewById(R.id.rv_trailers);
-        mRecyclerView.setHasFixedSize(true);
-        mTrailerAdapter = new TrailerAdapter(this);
-        mRecyclerView.setAdapter(mTrailerAdapter);
-
-        mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
-
-        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
-
-        mRecyclerViewReview = findViewById(R.id.rv_reviews);
-        mRecyclerView.setHasFixedSize(true);
-        mReviewAdapter = new ReviewAdapter();
-        mRecyclerViewReview.setAdapter(mReviewAdapter);
-
-        mErrorMessageDisplayReview = findViewById(R.id.tv_error_message_display_review);
-
-        mLoadingIndicatorReview = findViewById(R.id.pb_loading_indicator_review);
-
         // Remove back arrow from action bar
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
+
+        mDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_movie_detail);
+
+        mDetailBinding.rvTrailers.setHasFixedSize(true);
+        mTrailerAdapter = new TrailerAdapter(this);
+        mDetailBinding.rvTrailers.setAdapter(mTrailerAdapter);
+
+        mDetailBinding.rvReviews.setHasFixedSize(true);
+        mReviewAdapter = new ReviewAdapter();
+        mDetailBinding.rvReviews.setAdapter(mReviewAdapter);
 
         Intent intentThatStartedThisActivity = getIntent();
 
