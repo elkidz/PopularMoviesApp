@@ -1,15 +1,34 @@
-package com.example.popularmovies.data;
+package com.example.popularmovies.data.database;
+
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+@Entity(tableName = "movie")
 public class Movie implements Serializable {
 
+    @PrimaryKey
     private int id;
     private String title;
     private String releaseDate;
     private String poster;
     private double voteAverage;
     private String overview;
+
+    @Ignore
+    public Movie() {
+    }
+
+    public Movie(int id, String title, String releaseDate, String poster, double voteAverage, String overview) {
+        this.id = id;
+        this.title = title;
+        this.releaseDate = releaseDate;
+        this.poster = poster;
+        this.voteAverage = voteAverage;
+        this.overview = overview;
+    }
 
     public int getId() {
         return id;

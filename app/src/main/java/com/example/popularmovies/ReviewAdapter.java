@@ -10,17 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.popularmovies.data.Review;
-import com.example.popularmovies.utils.MovieJsonUtils;
 
-import org.json.JSONException;
+import java.util.List;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewAdapterViewHolder> {
 
-    private String[] mReviewData;
+    private List<Review> mReviewData;
+
+    ReviewAdapter() {
+    }
 
     @NonNull
     @Override
-    public ReviewAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public ReviewAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         Context context = viewGroup.getContext();
         int layoutIdForListItem = R.layout.review_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -30,31 +32,26 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ReviewAdapterViewHolder holder, int position) {
-        String reviewJson = mReviewData[position];
+    public void onBindViewHolder(ReviewAdapterViewHolder reviewAdapterViewHolder, int position) {
+        Review review = mReviewData.get(position);
 
-        try {
-            Review review = MovieJsonUtils.getReviewFromJson(reviewJson);
-
-            holder.mReviewAuthor.setText(review.getAuthor());
-            holder.mReviewContent.setText(review.getContent());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        reviewAdapterViewHolder.mReviewAuthor.setText(review.getAuthor());
+        reviewAdapterViewHolder.mReviewContent.setText(review.getContent());
     }
 
     @Override
     public int getItemCount() {
         if (null == mReviewData) return 0;
-        return mReviewData.length;
+        return mReviewData.size();
     }
 
-    void setReviewData(String[] reviewData) {
+
+    void setReviewData(List<Review> reviewData) {
         mReviewData = reviewData;
         notifyDataSetChanged();
     }
 
-    static class ReviewAdapterViewHolder extends RecyclerView.ViewHolder {
+    class ReviewAdapterViewHolder extends RecyclerView.ViewHolder {
         final TextView mReviewAuthor;
         final TextView mReviewContent;
 
