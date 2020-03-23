@@ -1,9 +1,7 @@
 package com.example.popularmovies;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,14 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.popularmovies.data.database.Movie;
 import com.example.popularmovies.data.Trailer;
+import com.example.popularmovies.databinding.ActivityMovieDetailBinding;
 import com.example.popularmovies.utils.InjectorUtils;
-import com.example.popularmovies.utils.MovieJsonUtils;
 import com.example.popularmovies.utils.NetworkUtils;
 import com.example.popularmovies.viewmodel.MovieDetailActivityViewModel;
 import com.example.popularmovies.viewmodel.MovieDetailViewModelFactory;
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.util.Objects;
 
 public class MovieDetailActivity extends AppCompatActivity implements TrailerAdapter.TrailerAdapterOnClickHandler{
@@ -36,11 +33,24 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
     private TrailerAdapter mTrailerAdapter;
     private ReviewAdapter mReviewAdapter;
 
+    private RecyclerView mRecyclerView;
+    private TextView mErrorMessageDisplay;
+    private ProgressBar mLoadingIndicator;
+
+    private RecyclerView mRecyclerViewReview;
+    private TextView mErrorMessageDisplayReview;
+    private ProgressBar mLoadingIndicatorReview;
     private MovieDetailActivityViewModel mViewModel;
 
-    private ActivityMovieDetailBinding mDetailBinding;
-
     private Movie mMovie;
+    private TextView mTitle;
+    private TextView mReleaseDate;
+    private TextView mVoteAverage;
+    private TextView mOverview;
+    private ImageView mImagePoster;
+    private ImageView mImageFavorite;
+
+    private ActivityMovieDetailBinding mDetailBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +68,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
         mDetailBinding.rvReviews.setHasFixedSize(true);
         mReviewAdapter = new ReviewAdapter();
         mDetailBinding.rvReviews.setAdapter(mReviewAdapter);
+
 
         Intent intentThatStartedThisActivity = getIntent();
 
