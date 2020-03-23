@@ -17,7 +17,7 @@ public final class NetworkUtils {
     private static final String MOVIE_DATABASE_URL = "https://api.themoviedb.org";
 
     private static final String POSTER_BASE_URL = "https://image.tmdb.org/t/p/";
-    private static final String POSTER_SIZE = "w185";
+    private static final String POSTER_SIZE = "w500";
 
     private static final String YOUTUBE_BASE_URL = "https://www.youtube.com";
     private static final String WATCH_PATH = "watch";
