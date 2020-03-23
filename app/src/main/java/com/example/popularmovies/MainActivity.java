@@ -61,7 +61,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         Log.d(LOG_TAG, "Main activity created");
     }
-    
+
+    private void showData() {
+        List<Movie> movies;
+        if (mViewModel.isShowFavorite()) {
+            movies = mMoviesFavorite;
+        } else {
+            movies = mMovies;
+        }
+        mMovieAdapter.setMovieData(movies);
+        if (movies != null && movies.size() != 0) showMovieDataView();
+        else showLoading();
+    }
+
     private void showMovieDataView() {
         /* First, make sure the error is invisible */
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
