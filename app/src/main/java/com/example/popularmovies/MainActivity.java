@@ -75,9 +75,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     }
 
     private void showMovieDataView() {
-        /* First, make sure the error is invisible */
-        mErrorMessageDisplay.setVisibility(View.INVISIBLE);
-        /* Then, make sure the movie data is visible */
+        Log.d(LOG_TAG, "showMovieDataView");
+        mLoadingIndicator.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
