@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -71,7 +72,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         }
         mMovieAdapter.setMovieData(movies);
         if (movies != null && movies.size() != 0) showMovieDataView();
-        else showLoading();
+        else Toast.makeText(getApplicationContext(),
+                "No favorites",
+                Toast.LENGTH_LONG).show();
     }
 
     private void showMovieDataView() {
