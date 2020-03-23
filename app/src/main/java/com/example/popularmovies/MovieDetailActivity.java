@@ -91,14 +91,18 @@ public class MovieDetailActivity extends AppCompatActivity implements TrailerAda
 
     private void bindToUI() {
         Log.d(LOG_TAG, "bindToUI");
-        mTitle.setText(mMovie.getTitle());
-        mReleaseDate.setText(mMovie.getReleaseDate());
-        mVoteAverage.setText(String.format(
+        mDetailBinding.tvDetailTitle.setText(mMovie.getTitle());
+        mDetailBinding.tvDetailReleaseDate.setText(mMovie.getReleaseDate());
+        mDetailBinding.tvDetailVoteAverage.setText(String.format(
                 getApplicationContext().getString(R.string.vote_average_format),
                 mMovie.getVoteAverage()
         ));
-        mOverview.setText(mMovie.getOverview());
-        mImagePoster.setContentDescription(mMovie.getTitle());
+        mDetailBinding.tvDetailOverview.setText(mMovie.getOverview());
+        mDetailBinding.ivDetailMoviePoster.setContentDescription(mMovie.getTitle());
+        mDetailBinding.ivFavorite.setOnClickListener(view -> {
+            Log.d(LOG_TAG, "Movie favorite clicked: " + mMovie.getId());
+            mViewModel.setFavorite(mMovie);
+        });
 
         Picasso.get()
                 .load(mMovie.getPoster())
