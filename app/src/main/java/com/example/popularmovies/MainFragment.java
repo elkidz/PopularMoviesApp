@@ -12,12 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.popularmovies.data.database.Movie;
 import com.example.popularmovies.utils.InjectorUtils;
+import com.example.popularmovies.utils.NetworkUtils;
 import com.example.popularmovies.viewmodel.MainActivityViewModel;
 import com.example.popularmovies.viewmodel.MainViewModelFactory;
 
@@ -27,6 +31,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
+/** I THINK I DON'T NEED THIS
 public class MainFragment extends Fragment implements MovieAdapter.MovieAdapterOnClickHandler {
 
     private RecyclerView mRecyclerView;
@@ -63,15 +68,15 @@ public class MainFragment extends Fragment implements MovieAdapter.MovieAdapterO
         mMovieAdapter = new MovieAdapter(this);
         mRecyclerView.setAdapter(mMovieAdapter);
 
-        MainViewModelFactory factory = InjectorUtils.provideMainActivityViewModelFactory(this.getApplicationContext());
+        MainViewModelFactory factory = InjectorUtils.provideMainActivityViewModelFactory(this.getActivity().getApplicationContext());
         mViewModel = new ViewModelProvider(this, factory).get(MainActivityViewModel.class);
 
-        mViewModel.getMovies().observe(this, movies -> {
+        mViewModel.getMovies().observe(this.getViewLifecycleOwner(), movies -> {
             mMovies = movies;
             showData();
         });
 
-        mViewModel.getMoviesFavorite().observe(this, movies -> {
+        mViewModel.getMoviesFavorite().observe(this.getViewLifecycleOwner(), movies -> {
             mMoviesFavorite = movies;
             showData();
         });
@@ -106,4 +111,35 @@ public class MainFragment extends Fragment implements MovieAdapter.MovieAdapterO
     public void onClick(Movie movie) {
 
     }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        MenuInflater inflater = getMenuInflater();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_sort_by_popular:
+                mViewModel.fetchMovies(NetworkUtils.Sort.POPULAR.name());
+                mViewModel.setShowFavorite(false);
+                // Force going top when switching sorts
+                mRecyclerView.smoothScrollToPosition(0);
+                return true;
+            case R.id.action_sort_by_top_rated:
+                mViewModel.fetchMovies(NetworkUtils.Sort.TOP_RATED.name());
+                mViewModel.setShowFavorite(false);
+                mRecyclerView.smoothScrollToPosition(0);
+                return true;
+            case R.id.action_sort_favorite:
+                mViewModel.setShowFavorite(true);
+                showData();
+                mRecyclerView.smoothScrollToPosition(0);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
+**/
