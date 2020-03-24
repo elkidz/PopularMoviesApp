@@ -10,4 +10,7 @@
     <string name="image_favorite">Favorite</string>
     <string name="vote_average_format">%.1f/10</string>
     <string name="menu_sort_favorite">Show favorites</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
