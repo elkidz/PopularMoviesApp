@@ -11,7 +11,6 @@ import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.popularmovies.data.database.Movie;
@@ -63,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         Log.d(LOG_TAG, "Main activity created");
     }
 
+    /**
+     * Show data with favorites with option favorite list in mind
+     */
     private void showData() {
         List<Movie> movies;
         if (mViewModel.isShowFavorite()) {
@@ -75,8 +77,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         else showLoading();
     }
 
+    /**
+     * Show movie posters, hide loading
+     */
     private void showMovieDataView() {
-        Log.d(LOG_TAG, "showMovieDataView");
         mLoadingIndicator.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.VISIBLE);
     }
@@ -90,8 +94,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         startActivity(intentToStartDetailActivity);
     }
 
+    /**
+     * Show loading indicator, "hide" movie posters/recyclerview
+     */
     private void showLoading() {
-        Log.d(LOG_TAG, "Loading");
         mRecyclerView.setVisibility(View.INVISIBLE);
         mLoadingIndicator.setVisibility(View.VISIBLE);
     }

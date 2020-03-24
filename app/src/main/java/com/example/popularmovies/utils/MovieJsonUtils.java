@@ -13,7 +13,7 @@ import java.util.List;
 
 public final class MovieJsonUtils {
 
-    public static String[] getListFromJson(String jsonStr) throws JSONException {
+    private static String[] getListFromJson(String jsonStr) throws JSONException {
 
         final String RESULT_LIST = "results";
         final String STATUS_CODE = "status_code";
@@ -80,7 +80,13 @@ public final class MovieJsonUtils {
         return reviews;
     }
 
-    public static Movie getMovieFromJson(String movieJsonStr) throws JSONException {
+    /**
+     * Get movie details from JSON
+     * @param movieJsonStr Movie JSON String
+     * @return movie
+     * @throws JSONException Invalid JSON Object
+     */
+    private static Movie getMovieFromJson(String movieJsonStr) throws JSONException {
 
         final String MOVIE_RELEASE_DATE = "release_date";
         final String MOVIE_ID = "id";
@@ -109,7 +115,13 @@ public final class MovieJsonUtils {
         return movie;
     }
 
-    public static Trailer getTrailerFromJson(String trailerJsonStr) throws JSONException {
+    /**
+     * Get trailer from JSON
+     * @param trailerJsonStr Trailer JSON String
+     * @return trailer
+     * @throws JSONException Invalid JSON Object
+     */
+    private static Trailer getTrailerFromJson(String trailerJsonStr) throws JSONException {
 
         final String TRAILER_ID = "id";
         final String TRAILER_KEY = "key";
@@ -135,7 +147,13 @@ public final class MovieJsonUtils {
     }
 
 
-    public static Review getReviewFromJson(String reviewJsonStr) throws JSONException {
+    /**
+     * Get reviews from JSON
+     * @param reviewJsonStr Review JSON String
+     * @return review
+     * @throws JSONException Invalid JSON Object
+     */
+    private static Review getReviewFromJson(String reviewJsonStr) throws JSONException {
         final String REVIEW_ID = "id";
         final String REVIEW_AUTHOR = "author";
         final String REVIEW_CONTENT = "content";

@@ -19,6 +19,7 @@ public class Movie implements Serializable {
 
     @Ignore
     public Movie() {
+        // Required empty public constructor
     }
 
     public Movie(int id, String title, String releaseDate, String poster, double voteAverage, String overview) {

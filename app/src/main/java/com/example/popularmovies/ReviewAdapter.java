@@ -18,6 +18,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewAdap
     private List<Review> mReviewData;
 
     ReviewAdapter() {
+        // Required empty constructor
     }
 
     @NonNull
